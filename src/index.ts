@@ -1,0 +1,25 @@
+import express from "express";
+import { authRouter } from "./routes/authRoutes";
+
+const app = express();
+const PORT = process.env.PORT || 8000;
+
+app.get("/health", (req, res) => {
+  const check = {
+    uptime: process.uptime(),
+    messaage: "ok",
+    timeStamp: new Date().toISOString(),
+  };
+  try {
+    return res.status(200).json(check);
+  } catch (err) {
+    check.messaage = "error";
+    return res.status(500).json(check);
+  }
+});
+
+app.use("/v1/auth", authRouter);
+
+app.listen(PORT, () => {
+  console.log(`Listening at PORT ${PORT}`);
+});
