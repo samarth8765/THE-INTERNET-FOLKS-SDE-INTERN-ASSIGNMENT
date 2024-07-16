@@ -48,7 +48,7 @@ export const authMiddleware = async (
     } else if (error instanceof JsonWebTokenError) {
       return res.status(401).json({ status: false, message: "Invalid token" });
     } else {
-      res.status(401).json({ status: false, message: "Internal Server Error" });
+      res.status(500).json({ status: false, message: "Internal Server Error" });
     }
   }
 };
