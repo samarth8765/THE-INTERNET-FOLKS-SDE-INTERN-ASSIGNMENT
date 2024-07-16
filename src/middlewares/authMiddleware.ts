@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import { verify } from "jsonwebtoken";
+import { JsonWebTokenError, TokenExpiredError, verify } from "jsonwebtoken";
 import { JWTPayload } from "../utils/schema";
 import { DBClient } from "../utils/prisma";
 
@@ -41,6 +41,14 @@ export const authMiddleware = async (
     next();
   } catch (error) {
     console.log(error);
-    res.status(401).json({ message: "Internal Server Error" });
+    if (error instanceof TokenExpiredError) {
+      return res
+        .status(401)
+        .json({ status: false, message: "Token has expired" });
+    } else if (error instanceof JsonWebTokenError) {
+      return res.status(401).json({ status: false, message: "Invalid token" });
+    } else {
+      res.status(401).json({ status: false, message: "Internal Server Error" });
+    }
   }
 };
