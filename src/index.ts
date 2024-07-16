@@ -4,6 +4,8 @@ import { authRouter } from "./routes/authRoutes";
 const app = express();
 const PORT = process.env.PORT || 8000;
 
+app.use(express.json());
+
 app.get("/health", (req, res) => {
   const check = {
     uptime: process.uptime(),
