@@ -11,6 +11,10 @@ export const signInSchema = zod.object({
   password: zod.string(),
 });
 
+export const roleSchema = zod.object({
+  name: zod.string().min(2),
+});
+
 export interface JWTPayload {
   id: string;
 }

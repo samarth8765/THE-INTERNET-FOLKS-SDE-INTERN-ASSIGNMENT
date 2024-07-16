@@ -1,5 +1,6 @@
 import express from "express";
 import { authRouter } from "./routes/authRoutes";
+import { routeRouter } from "./routes/roleRoutes";
 
 const app = express();
 const PORT = process.env.PORT || 8000;
@@ -21,6 +22,7 @@ app.get("/health", (req, res) => {
 });
 
 app.use("/v1/auth", authRouter);
+app.use("/v1/role", routeRouter);
 
 app.listen(PORT, () => {
   console.log(`Listening at PORT ${PORT}`);
