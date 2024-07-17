@@ -149,9 +149,6 @@ export const userInfo = (req: Request, res: Response) => {
           email: data.user.email,
           created_at: data.user.createdAt,
         },
-        meta: {
-          access_token: data.token,
-        },
       },
     };
 

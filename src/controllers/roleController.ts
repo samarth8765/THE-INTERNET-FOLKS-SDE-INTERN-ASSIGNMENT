@@ -57,6 +57,13 @@ export const getAllRoles = async (req: Request, res: Response) => {
     const { page = 1 } = req.query;
     const limit = 10;
 
+    const total = await db.role.count();
+    const totalPages = Math.ceil(total / limit);
+
+    if (Number(page) > totalPages) {
+      return res.status(404).json({ status: false, error: "Roles Not Found" });
+    }
+
     const roles = await db.role.findMany({
       skip: (Number(page) - 1) * limit,
       take: limit,
@@ -64,9 +71,6 @@ export const getAllRoles = async (req: Request, res: Response) => {
         createdAt: "asc",
       },
     });
-
-    const total = await db.role.count();
-    const totalPages = Math.ceil(total / limit);
 
     const responseBody = {
       status: true,

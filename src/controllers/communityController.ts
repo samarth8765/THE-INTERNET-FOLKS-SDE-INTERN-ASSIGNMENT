@@ -79,7 +79,7 @@ export const createCommunity = async (req: Request, res: Response) => {
       if (error.code === "P2002") {
         return res.status(409).json({
           status: false,
-          error: "Role name already exists",
+          error: "Community name already exists",
         });
       }
     }
@@ -116,7 +116,7 @@ export const getAllCommunities = async (req: Request, res: Response) => {
         },
       },
       orderBy: {
-        createdAt: "asc",
+        createdAt: "desc",
       },
     });
 
@@ -178,7 +178,7 @@ export const getAllMembers = async (req: Request, res: Response) => {
         },
       },
       orderBy: {
-        createdAt: "asc",
+        createdAt: "desc",
       },
     });
 
@@ -239,7 +239,7 @@ export const getMyOwnedCommunities = async (req: Request, res: Response) => {
       skip: (Number(page) - 1) * limit,
       take: limit,
       orderBy: {
-        createdAt: "asc",
+        createdAt: "desc",
       },
     });
 
@@ -295,7 +295,7 @@ export const getMyJoinedCommunities = async (req: Request, res: Response) => {
         },
       },
       orderBy: {
-        createdAt: "asc",
+        createdAt: "desc",
       },
     });
 

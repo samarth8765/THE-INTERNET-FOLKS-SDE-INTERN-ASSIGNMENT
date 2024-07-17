@@ -94,7 +94,7 @@ export const deleteMember = async (req: Request, res: Response) => {
 
     const memberToRemove = await db.member.findUnique({
       where: { id },
-      include: { community: true },
+      include: { community: true, role: true },
     });
 
     if (!memberToRemove) {
@@ -126,7 +126,43 @@ export const deleteMember = async (req: Request, res: Response) => {
       });
     }
 
+    // Check if the member to be removed is an admin or moderator
+    const isAdminBeingRemoved = memberToRemove.roleId === adminRole!.id;
+    const isModeratorBeingRemoved = memberToRemove.roleId === moderatorRole!.id;
+
+    // Check if the current user is a moderator
+    const isCurrentUserModerator = await db.member.findFirst({
+      where: {
+        communityId: memberToRemove.communityId,
+        userId,
+        roleId: moderatorRole!.id,
+      },
+    });
+
+    if (
+      isCurrentUserModerator &&
+      (isAdminBeingRemoved || isModeratorBeingRemoved)
+    ) {
+      return res.status(403).json({
+        status: false,
+        error:
+          "NOT_ALLOWED_ACCESS, Moderators cannot remove admins or other moderators",
+      });
+    }
+
     await db.member.delete({ where: { id } });
+
+    // Check the number of remaining members in the community
+    const numberOfMembers = await db.member.count({
+      where: { communityId: memberToRemove.communityId },
+    });
+
+    // If no members remain, delete the community
+    if (numberOfMembers === 0) {
+      await db.community.delete({
+        where: { id: memberToRemove.communityId },
+      });
+    }
 
     return res.status(200).json({
       status: true,
