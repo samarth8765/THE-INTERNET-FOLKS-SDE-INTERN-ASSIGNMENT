@@ -46,7 +46,9 @@ export const createRole = async (req: Request, res: Response) => {
         });
       }
     }
-    res.status(500).json({ status: false, message: "Internal Server Error" });
+    return res
+      .status(500)
+      .json({ status: false, message: "Internal Server Error" });
   }
 };
 
@@ -86,6 +88,8 @@ export const getAllRoles = async (req: Request, res: Response) => {
     return res.status(200).json(responseBody);
   } catch (error) {
     console.log(error);
-    res.status(500).json({ status: false, message: "Internal Server Error" });
+    return res
+      .status(500)
+      .json({ status: false, message: "Internal Server Error" });
   }
 };
