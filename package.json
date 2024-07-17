@@ -5,7 +5,11 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon",
-    "build": "pnpm exec tsc -b && node dist/index.js"
+    "build": "pnpm exec tsc -b && node dist/index.js",
+    "prisma:migrate": "pnpm exec prisma migrate deploy",
+    "studio": "pnpm exec prisma studio",
+    "prisma:docker": "pnpm run prisma:migrate && pnpm run studio",
+    "dev:docker": "pnpm run prisma:docker & pnpm exec nodemon -L"
   },
   "keywords": [],
   "author": "",
