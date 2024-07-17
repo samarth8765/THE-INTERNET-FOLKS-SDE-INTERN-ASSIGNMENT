@@ -15,6 +15,16 @@ export const roleSchema = zod.object({
   name: zod.string().min(2),
 });
 
+export const communitySchema = zod.object({
+  name: zod.string().min(2),
+});
+
+export const memberSchema = zod.object({
+  community: zod.string(),
+  user: zod.string(),
+  role: zod.string(),
+});
+
 export interface JWTPayload {
   id: string;
 }

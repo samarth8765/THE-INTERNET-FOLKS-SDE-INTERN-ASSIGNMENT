@@ -1,6 +1,8 @@
 import express from "express";
 import { authRouter } from "./routes/authRoutes";
 import { routeRouter } from "./routes/roleRoutes";
+import { communityRouter } from "./routes/communityRoutes";
+import { memberRouter } from "./routes/memberRoutes";
 
 const app = express();
 const PORT = process.env.PORT || 8000;
@@ -23,6 +25,8 @@ app.get("/health", (req, res) => {
 
 app.use("/v1/auth", authRouter);
 app.use("/v1/role", routeRouter);
+app.use("/v1/community", communityRouter);
+app.use("/v1/member", memberRouter);
 
 app.listen(PORT, () => {
   console.log(`Listening at PORT ${PORT}`);
