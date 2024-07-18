@@ -9,6 +9,13 @@ const PORT = process.env.PORT || 8000;
 
 app.use(express.json());
 
+app.get("/", (req, res) => {
+  res.status(200).send(`
+    <h1>Hi! Please follow this link for more information about API routes:</h1>
+    <a href="https://documenter.getpostman.com/view/14439156/2s93Jrx5Da#3f8eef19-fe2f-458b-bde7-a7abe9fcefa3" target="_blank" >API Routes Information</a>
+  `);
+});
+
 app.get("/health", (req, res) => {
   const check = {
     uptime: process.uptime(),
