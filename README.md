@@ -58,4 +58,4 @@
 
 - For API routes and documentation, refer to the provided link: [API Routes Documentation](https://documenter.getpostman.com/view/14439156/2s93Jrx5Da#3f8eef19-fe2f-458b-bde7-a7abe9fcefa3)
 
-- Live Link -> https://api-saas.samarthdhawan.com
+- Test the api using the Live Link -> https://api-saas.samarthdhawan.com
